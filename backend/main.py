@@ -47,7 +47,26 @@ def add_book(book: BookCreate):
 
 
 @app.get("/books")
+
 def get_books():
     db = SessionLocal()
     books = db.query(Book).all()
     return books
+
+@app.patch("/books/{book_id}/status")
+def update_book_status(book_id: int, status: str):
+    db = SessionLocal()
+    
+    # Find the book by its ID
+    book = db.query(Book).filter(Book.id == book_id).first()
+    
+    if not book:
+        from fastapi import HTTPException
+        raise HTTPException(status_code=404, detail="Book not found")
+    
+    # Update the status and commit to the database
+    book.status = status
+    db.commit()
+    db.close()
+    
+    return {"message": "Status updated successfully"}

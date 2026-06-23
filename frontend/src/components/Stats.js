@@ -15,7 +15,7 @@ function Stats({ books }) {
 
   return (
     <div className="card">
-      <h2>Reading Stats</h2>
+      <h2>Reading Status</h2>
 
       <p><strong>Total Books:</strong> {totalBooks}</p>
       <p><strong>Reading:</strong> {readingBooks}</p>

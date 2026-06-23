@@ -1,54 +1,352 @@
-body {
-  background-color: #f4f6f8;
-  font-family: Arial, sans-serif;
+/* --- Core Color Variables & Reset --- */
+:root {
+  --bg-main: #97cc97;
+  --bg-card: #ffffff;
+  --primary: #0f5132;        /* Elegant Emerald Green */
+  --primary-hover: #0a3622;  /* Deep Forest Green */
+  --accent: #d97706;         /* Warm Amber Accent */
+  --accent-light: #fef3c7;   /* Soft Amber Tint */
+  --text-dark: #1c2421;
+  --text-muted: #53615c;
+  --border-color: #e2e8f0;
+  --radius-lg: 16px;
+  --radius-md: 10px;
+  --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.03), 0 2px 4px -1px rgba(0, 0, 0, 0.02);
+  --shadow-md: 0 10px 25px -5px rgba(15, 81, 50, 0.05), 0 8px 16px -8px rgba(0, 0, 0, 0.05);
+  --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.container {
-  max-width: 900px;
-  margin: auto;
-  padding: 20px;
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* --- Base Layout --- */
+.app {
+  padding: 40px 20px;
+  background: var(--bg-main);
+  min-height: 100vh;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  color: var(--text-dark);
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+header {
+  text-align: center;
+  margin-bottom: 35px;
+}
+
+header h1 {
+  font-size: 2.5rem;
+  color: var(--primary);
+  font-weight: 800;
+  letter-spacing: -0.5px;
+}
+
+header p {
+  color: var(--text-muted);
+  font-size: 1.05rem;
+  margin-top: 4px;
+}
+
+/* --- Dashboard Grid Setup --- */
+.dashboard {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 30px;
+  margin-bottom: 45px;
 }
 
 .card {
-  background: white;
-  padding: 15px;
-  margin: 15px 0;
-  border-radius: 10px;
-  box-shadow: 0px 2px 8px rgba(0,0,0,0.1);
+  background: var(--bg-card);
+  padding: 30px;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  border: 1px solid rgba(15, 81, 50, 0.04);
 }
 
-input,
-select,
-textarea {
-  width: 100%;
-  padding: 10px;
+.card h2 {
+  font-size: 1.4rem;
+  color: var(--primary);
+  margin-bottom: 20px;
+  font-weight: 700;
+}
+
+/* --- Modernized Reading Stats --- */
+.stats {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+.stat {
+  background: rgba(15, 81, 50, 0.04);
+  padding: 22px 15px;
+  border-radius: var(--radius-md);
+  text-align: center;
+  color: var(--primary);
+  border: 1px solid rgba(15, 81, 50, 0.06);
+  font-weight: 500;
+  font-size: 0.95rem;
+  transition: var(--transition);
+}
+
+.stat:hover {
+  background: rgba(15, 81, 50, 0.07);
+}
+
+.stat b {
+  display: block;
   margin-top: 8px;
-  margin-bottom: 12px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
+  font-size: 32px;
+  color: var(--accent);
+  font-weight: 800;
 }
 
-button {
-  background-color: #2563eb;
+/* --- Clean Form Styles (With Darker Input Shades) --- */
+.book-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.book-form input,
+.book-form textarea,
+.book-form select,
+.add-section input,
+.add-section textarea,
+.add-section select {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid #cbd5e1;       /* Darker, crisper border definition */
+  border-radius: var(--radius-md);
+  background-color: #c9cdd2;       /* Darker concrete-gray base shade */
+  color: #0f172a;                  /* Deep dark text for excellent legibility */
+  font-size: 0.95rem;
+  font-weight: 500;
+  transition: var(--transition);
+  outline: none;
+}
+
+/* Enhances placeholder visibility on darker backgrounds */
+.book-form input::placeholder,
+.book-form textarea::placeholder {
+  color: #64748b;
+  font-weight: 400;
+}
+
+/* Transitions to clean white on active selection */
+.book-form input:focus,
+.book-form textarea:focus,
+.book-form select:focus,
+.add-section input:focus,
+.add-section textarea:focus,
+.add-section select:focus {
+  border-color: var(--primary);
+  background-color: #ffffff;       /* Flips to white when typing */
+  box-shadow: 0 0 0 3px rgba(15, 81, 50, 0.15);
+}
+
+.book-form textarea {
+  min-height: 90px;
+  resize: vertical;
+}
+
+.book-form button,
+.add-section button {
+  width: 100%;
+  padding: 14px;
+  background: var(--primary);
   color: white;
   border: none;
-  padding: 10px 15px;
-  border-radius: 6px;
+  border-radius: var(--radius-md);
   cursor: pointer;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: var(--transition);
+  box-shadow: 0 4px 10px rgba(15, 81, 50, 0.15);
+  margin-top: 5px;
 }
 
-button:hover {
-  background-color: #1d4ed8;
+.book-form button:hover,
+.add-section button:hover {
+  background: var(--primary-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 14px rgba(15, 81, 50, 0.2);
 }
 
-h1 {
+.book-form button:active,
+.add-section button:active {
+  transform: translateY(0);
+}
+
+/* --- Books Library Collection Grid --- */
+.books h2 {
+  font-size: 1.6rem;
+  margin-bottom: 24px;
+  color: var(--primary);
+  font-weight: 700;
+}
+
+.book-list-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 25px;
+}
+
+/* --- Dynamic Book Card Item --- */
+.book-card-item {
+  background: var(--bg-card);
+  padding: 24px;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-sm);
+  transition: var(--transition);
+  display: flex;
+  flex-direction: column;
+}
+
+.book-card-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 30px -5px rgba(0, 0, 0, 0.08);
+  border-color: rgba(15, 81, 50, 0.15);
+}
+
+.book-card-item h3 {
+  margin-bottom: 14px;
+  color: var(--text-dark);
+  font-size: 1.3rem;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.book-card-item p {
+  margin: 7px 0;
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.book-card-item strong {
+  color: #334155;
+  font-weight: 600;
+}
+
+.stat {
+  background: rgba(15, 81, 50, 0.02); /* Subtle tint */
+  padding: 22px 15px;
+  border-radius: var(--radius-md);
+  text-align: center;
+  color: var(--primary);
+  
+  /* --- The Changed Border Line Style --- */
+  border: 1.5px solid rgba(15, 81, 50, 0.25); /* Thicker, deeper emerald tint border */
+  box-shadow: 0 2px 8px rgba(15, 81, 50, 0.03); /* Soft inner depth */
+  
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: var(--transition);
+}
+
+/* Hover effect to make them interactive */
+.stat:hover {
+  background: rgba(15, 81, 50, 0.05);
+  border-color: var(--primary); /* Fully solid border on hover */
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(15, 81, 50, 0.08);
+}
+
+
+/* --- Native Status Dropdown Inline Badge --- */
+.status-updater {
+  padding: 6px 12px;
+  border-radius: 20px;
+  border: 1px solid var(--primary);
+  background-color: rgba(15, 81, 50, 0.05);
+  font-size: 0.85rem;
+  color: var(--primary);
+  cursor: pointer;
+  font-weight: 600;
+  outline: none;
+  transition: var(--transition);
+  appearance: none; /* Removes native browser arrow styling for custom look */
+  -webkit-appearance: none;
   text-align: center;
 }
 
-.book-card {
-  background: white;
-  padding: 15px;
-  margin-top: 10px;
-  border-radius: 10px;
-  box-shadow: 0px 2px 8px rgba(0,0,0,0.1);
+.status-updater:focus, .status-updater:hover {
+  background-color: var(--primary);
+  color: white;
+  box-shadow: 0 2px 8px rgba(15, 81, 50, 0.2);
+}
+
+
+/* --- Dynamic Workspace Side Asset Injector --- */
+@media (min-width: 1400px) {
+  body {
+    background-image: var(--left-illustration), var(--right-illustration);
+    background-position: left center, right center; /* Centers them vertically on the screen sides */
+    
+    /* --- THE FIX: This makes them stretch wide to fill up all the plain white side space --- */
+    background-size: 25vw 100vh, 25vw 100vh; 
+    
+    background-repeat: no-repeat, no-repeat;
+    background-attachment: fixed;
+  }
+}
+
+/* Fallback handler if screen is medium-wide (between 1200px and 1399px) */
+@media (min-width: 1200px) and (max-width: 1399px) {
+  body {
+    background-image: var(--left-illustration), var(--right-illustration);
+    background-position: left center, right center;
+    
+    /* Slightly narrower stretch ratio for smaller screens */
+    background-size: 20vw 100vh, 20vw 100vh; 
+    
+    background-repeat: no-repeat, no-repeat;
+    background-attachment: fixed;
+  }
+  .app {
+    max-width: 850px; 
+  }
+}
+.app {
+  position: relative;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Left illustration */
+.app::before {
+  content: "";
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 320px;
+  height: 110vh;
+  background-image: var(--left-illustration);
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  z-index: -1;
+}
+
+/* Right illustration */
+.app::after {
+  content: "";
+  position: fixed;
+  right: 0;
+  top: 0;
+  width: 170px;
+  height: 100vh;
+  background-image: var(--right-illustration);
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  z-index: -1;
 }

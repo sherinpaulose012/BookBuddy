@@ -1,7 +1,8 @@
 import { useState } from "react";
 import axios from "axios";
 
-function AddBook() {
+// Destructure the onBookAdded callback from props
+function AddBook({ onBookAdded }) {
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
   const [genre, setGenre] = useState("");
@@ -12,20 +13,32 @@ function AddBook() {
   const [rating, setRating] = useState("");
 
   const addBook = async () => {
+    // Basic validation to prevent sending empty submissions
+    if (!title || !author) {
+      alert("Please fill out at least Title and Author!");
+      return;
+    }
+
     try {
       await axios.post("http://127.0.0.1:8000/books", {
         title,
         author,
         genre,
         status,
-        total_pages: Number(totalPages),
-        current_page: Number(currentPage),
+        total_pages: Number(totalPages) || 0,
+        current_page: Number(currentPage) || 0,
         notes,
-        rating: Number(rating),
+        rating: Number(rating) || 0,
       });
 
       alert("Book Added Successfully!");
 
+      // 1. Trigger the parent state update to pull fresh data from FastAPI
+      if (onBookAdded) {
+        onBookAdded();
+      }
+
+      // 2. Clear out the form inputs
       setTitle("");
       setAuthor("");
       setGenre("");
@@ -41,16 +54,13 @@ function AddBook() {
   };
 
   return (
-    <div>
-      <h2>Add Book</h2>
-
+    <div className="book-form">
       <input
         type="text"
         placeholder="Title"
         value={title}
         onChange={(e) => setTitle(e.target.value)}
       />
-      <br /><br />
 
       <input
         type="text"
@@ -58,7 +68,6 @@ function AddBook() {
         value={author}
         onChange={(e) => setAuthor(e.target.value)}
       />
-      <br /><br />
 
       <input
         type="text"
@@ -66,17 +75,15 @@ function AddBook() {
         value={genre}
         onChange={(e) => setGenre(e.target.value)}
       />
-      <br /><br />
 
       <select
         value={status}
         onChange={(e) => setStatus(e.target.value)}
       >
-        <option>Reading</option>
-        <option>Completed</option>
-        <option>Wishlist</option>
+        <option value="Reading">Reading</option>
+        <option value="Completed">Completed</option>
+        <option value="Wishlist">Wishlist</option>
       </select>
-      <br /><br />
 
       <input
         type="number"
@@ -84,7 +91,6 @@ function AddBook() {
         value={totalPages}
         onChange={(e) => setTotalPages(e.target.value)}
       />
-      <br /><br />
 
       <input
         type="number"
@@ -92,14 +98,12 @@ function AddBook() {
         value={currentPage}
         onChange={(e) => setCurrentPage(e.target.value)}
       />
-      <br /><br />
 
       <textarea
         placeholder="Notes"
         value={notes}
         onChange={(e) => setNotes(e.target.value)}
       />
-      <br /><br />
 
       <input
         type="number"
@@ -109,12 +113,9 @@ function AddBook() {
         placeholder="Rating"
         value={rating}
         onChange={(e) => setRating(e.target.value)}
-/>
-      <br /><br />
+      />
 
-      <button onClick={addBook}>
-        Add Book
-      </button>
+      <button onClick={addBook}>Add Book</button>
     </div>
   );
 }
