@@ -56,3 +56,8 @@ npm start
 * AI Book Recommendations
 * ISBN API Integration
 * Reading Analytics Graphs
+
+
+## Development
+
+This project is maintained using Git and GitHub.
